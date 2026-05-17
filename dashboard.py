@@ -221,7 +221,56 @@ except Exception as e:
     )
 
     st.write(e)
+st.subheader("🏆 Win Rate Analytics")
 
+try:
+
+    trade_df = pd.read_csv(
+        "trade_history.csv"
+    )
+
+    total_trades = len(trade_df)
+
+    buy_count = len(
+        trade_df[
+            trade_df["side"] == "OrderSide.BUY"
+        ]
+    )
+
+    sell_count = len(
+        trade_df[
+            trade_df["side"] == "OrderSide.SELL"
+        ]
+    )
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+
+        st.metric(
+            "Total Trades",
+            total_trades
+        )
+
+    with c2:
+
+        st.metric(
+            "Buy Orders",
+            buy_count
+        )
+
+    with c3:
+
+        st.metric(
+            "Sell Orders",
+            sell_count
+        )
+
+except Exception as e:
+
+    st.warning(
+        "No trade history yet"
+    )
 # =========================================
 # PERFORMANCE ANALYTICS
 # =========================================
