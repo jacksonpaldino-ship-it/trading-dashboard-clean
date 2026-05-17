@@ -29,9 +29,13 @@ client = TradingClient(
 
 account = client.get_account()
 
-equity = float(account.equity)
+equity = float(
+    account.equity
+)
 
-cash = float(account.cash)
+cash = float(
+    account.cash
+)
 
 buying_power = float(
     account.buying_power
@@ -50,7 +54,7 @@ timestamp = datetime.now().strftime(
 )
 
 # =========================================
-# SAVE EQUITY HISTORY
+# EQUITY HISTORY
 # =========================================
 
 equity_row = pd.DataFrame([{
@@ -80,7 +84,7 @@ equity_row.to_csv(
 )
 
 # =========================================
-# POSITIONS TRACKING
+# POSITIONS SNAPSHOT
 # =========================================
 
 positions = client.get_all_positions()
@@ -101,9 +105,21 @@ for p in positions:
         )
     })
 
-positions_df = pd.DataFrame(
-    position_rows
-)
+if len(position_rows) == 0:
+
+    positions_df = pd.DataFrame(columns=[
+        "timestamp",
+        "symbol",
+        "qty",
+        "market_value",
+        "unrealized_pl"
+    ])
+
+else:
+
+    positions_df = pd.DataFrame(
+        position_rows
+    )
 
 positions_df.to_csv(
     "positions_snapshot.csv",
@@ -111,7 +127,7 @@ positions_df.to_csv(
 )
 
 # =========================================
-# ORDERS TRACKING
+# ORDERS SNAPSHOT
 # =========================================
 
 orders = client.get_orders()
@@ -128,9 +144,21 @@ for o in orders[:50]:
         "status": str(o.status)
     })
 
-orders_df = pd.DataFrame(
-    order_rows
-)
+if len(order_rows) == 0:
+
+    orders_df = pd.DataFrame(columns=[
+        "timestamp",
+        "symbol",
+        "side",
+        "qty",
+        "status"
+    ])
+
+else:
+
+    orders_df = pd.DataFrame(
+        order_rows
+    )
 
 orders_df.to_csv(
     "orders_snapshot.csv",
