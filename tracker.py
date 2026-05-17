@@ -1,3 +1,5 @@
+# tracker.py
+
 from alpaca.trading.client import TradingClient
 import pandas as pd
 import os
@@ -7,8 +9,13 @@ from datetime import datetime
 # ALPACA CONNECTION
 # =========================================
 
-API_KEY = os.getenv("ALPACA_API_KEY")
-SECRET_KEY = os.getenv("ALPACA_SECRET_KEY")
+API_KEY = os.getenv(
+    "ALPACA_API_KEY"
+)
+
+SECRET_KEY = os.getenv(
+    "ALPACA_SECRET_KEY"
+)
 
 client = TradingClient(
     API_KEY,
@@ -23,13 +30,24 @@ client = TradingClient(
 account = client.get_account()
 
 equity = float(account.equity)
+
 cash = float(account.cash)
-buying_power = float(account.buying_power)
-last_equity = float(account.last_equity)
 
-daily_pnl = equity - last_equity
+buying_power = float(
+    account.buying_power
+)
 
-timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+last_equity = float(
+    account.last_equity
+)
+
+daily_pnl = (
+    equity - last_equity
+)
+
+timestamp = datetime.now().strftime(
+    "%Y-%m-%d %H:%M:%S"
+)
 
 # =========================================
 # SAVE EQUITY HISTORY
@@ -43,9 +61,13 @@ equity_row = pd.DataFrame([{
     "daily_pnl": daily_pnl
 }])
 
-if os.path.exists("equity_history.csv"):
+if os.path.exists(
+    "equity_history.csv"
+):
 
-    old = pd.read_csv("equity_history.csv")
+    old = pd.read_csv(
+        "equity_history.csv"
+    )
 
     equity_row = pd.concat(
         [old, equity_row],
@@ -71,11 +93,17 @@ for p in positions:
         "timestamp": timestamp,
         "symbol": p.symbol,
         "qty": p.qty,
-        "market_value": float(p.market_value),
-        "unrealized_pl": float(p.unrealized_pl)
+        "market_value": float(
+            p.market_value
+        ),
+        "unrealized_pl": float(
+            p.unrealized_pl
+        )
     })
 
-positions_df = pd.DataFrame(position_rows)
+positions_df = pd.DataFrame(
+    position_rows
+)
 
 positions_df.to_csv(
     "positions_snapshot.csv",
@@ -100,7 +128,9 @@ for o in orders[:50]:
         "status": str(o.status)
     })
 
-orders_df = pd.DataFrame(order_rows)
+orders_df = pd.DataFrame(
+    order_rows
+)
 
 orders_df.to_csv(
     "orders_snapshot.csv",
@@ -108,15 +138,20 @@ orders_df.to_csv(
 )
 
 # =========================================
-# TRADE ANALYTICS
+# ANALYTICS SNAPSHOT
 # =========================================
 
-total_positions = len(positions)
+total_positions = len(
+    positions
+)
 
 exposure = 0
 
 for p in positions:
-    exposure += abs(float(p.market_value))
+
+    exposure += abs(
+        float(p.market_value)
+    )
 
 analytics = pd.DataFrame([{
     "timestamp": timestamp,
@@ -131,4 +166,6 @@ analytics.to_csv(
     index=False
 )
 
-print("Tracking update complete.")
+print(
+    "Tracking update complete."
+)
