@@ -5,17 +5,8 @@ import pandas as pd
 import os
 from datetime import datetime
 
-# =========================================
-# ALPACA CONNECTION
-# =========================================
-
-API_KEY = os.getenv(
-    "ALPACA_API_KEY"
-)
-
-SECRET_KEY = os.getenv(
-    "ALPACA_SECRET_KEY"
-)
+API_KEY = os.getenv("ALPACA_API_KEY")
+SECRET_KEY = os.getenv("ALPACA_SECRET_KEY")
 
 client = TradingClient(
     API_KEY,
@@ -23,31 +14,14 @@ client = TradingClient(
     paper=False
 )
 
-# =========================================
-# ACCOUNT INFO
-# =========================================
-
 account = client.get_account()
 
-equity = float(
-    account.equity
-)
+equity = float(account.equity)
+cash = float(account.cash)
+buying_power = float(account.buying_power)
+last_equity = float(account.last_equity)
 
-cash = float(
-    account.cash
-)
-
-buying_power = float(
-    account.buying_power
-)
-
-last_equity = float(
-    account.last_equity
-)
-
-daily_pnl = (
-    equity - last_equity
-)
+daily_pnl = equity - last_equity
 
 timestamp = datetime.now().strftime(
     "%Y-%m-%d %H:%M:%S"
@@ -65,9 +39,7 @@ equity_row = pd.DataFrame([{
     "daily_pnl": daily_pnl
 }])
 
-if os.path.exists(
-    "equity_history.csv"
-):
+if os.path.exists("equity_history.csv"):
 
     old = pd.read_csv(
         "equity_history.csv"
@@ -162,6 +134,30 @@ else:
 
 orders_df.to_csv(
     "orders_snapshot.csv",
+    index=False
+)
+
+# =========================================
+# TRADE HISTORY
+# =========================================
+
+if os.path.exists("trade_history.csv"):
+
+    old_trade_df = pd.read_csv(
+        "trade_history.csv"
+    )
+
+    trade_history_df = pd.concat(
+        [old_trade_df, orders_df],
+        ignore_index=True
+    )
+
+else:
+
+    trade_history_df = orders_df
+
+trade_history_df.to_csv(
+    "trade_history.csv",
     index=False
 )
 
