@@ -1,3 +1,5 @@
+# dashboard.py
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -68,10 +70,6 @@ client = TradingClient(
     paper=False
 )
 
-# =========================================
-# ACCOUNT INFO
-# =========================================
-
 account = client.get_account()
 
 equity = float(account.equity)
@@ -79,15 +77,23 @@ cash = float(account.cash)
 buying_power = float(account.buying_power)
 
 daily_pnl = equity - float(account.last_equity)
-daily_pct = (daily_pnl / float(account.last_equity)) * 100
+
+daily_pct = (
+    daily_pnl
+    / float(account.last_equity)
+) * 100
 
 # =========================================
 # SIDEBAR
 # =========================================
 
-st.sidebar.title("📈 Trading Dashboard")
+st.sidebar.title(
+    "📈 Trading Dashboard"
+)
 
-st.sidebar.success("System Online")
+st.sidebar.success(
+    "System Online"
+)
 
 st.sidebar.markdown("---")
 
@@ -99,8 +105,13 @@ st.sidebar.write("⚙ Settings")
 
 st.sidebar.markdown("---")
 
-st.sidebar.write(f"Updated:")
-st.sidebar.write(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+st.sidebar.write("Updated:")
+
+st.sidebar.write(
+    datetime.now().strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
+)
 
 # =========================================
 # TITLE
@@ -120,15 +131,19 @@ st.write("")
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
+
     st.markdown(f"""
     <div class="metric-card">
         <div class="small-font">Equity</div>
         <h2>${equity:,.2f}</h2>
-        <div style="color:#4ade80;">{daily_pct:.2f}%</div>
+        <div style="color:#4ade80;">
+        {daily_pct:.2f}%
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
+
     st.markdown(f"""
     <div class="metric-card">
         <div class="small-font">Cash</div>
@@ -137,6 +152,7 @@ with col2:
     """, unsafe_allow_html=True)
 
 with col3:
+
     st.markdown(f"""
     <div class="metric-card">
         <div class="small-font">Buying Power</div>
@@ -145,7 +161,12 @@ with col3:
     """, unsafe_allow_html=True)
 
 with col4:
-    pnl_color = "#4ade80" if daily_pnl >= 0 else "#ef4444"
+
+    pnl_color = (
+        "#4ade80"
+        if daily_pnl >= 0
+        else "#ef4444"
+    )
 
     st.markdown(f"""
     <div class="metric-card">
@@ -165,7 +186,10 @@ st.write("")
 st.subheader("📈 Equity Curve")
 
 try:
-    equity_history = pd.read_csv("equity_history.csv")
+
+    equity_history = pd.read_csv(
+        "equity_history.csv"
+    )
 
     fig = px.line(
         equity_history,
@@ -190,75 +214,139 @@ try:
         use_container_width=True
     )
 
-except:
-    st.warning("No equity history yet.")
+except Exception as e:
+
+    st.warning(
+        "No equity history yet."
+    )
+
+    st.write(e)
 
 # =========================================
-# POSITIONS
+# PERFORMANCE ANALYTICS
 # =========================================
 
-st.subheader("📦 Open Positions")
+st.subheader(
+    "📊 Performance Analytics"
+)
 
 try:
-    positions = client.get_all_positions()
 
-    if len(positions) > 0:
+    analytics_df = pd.read_csv(
+        "analytics_snapshot.csv"
+    )
 
-        pos_data = []
+    latest = analytics_df.iloc[-1]
 
-        for p in positions:
-            pos_data.append({
-                "Symbol": p.symbol,
-                "Qty": p.qty,
-                "Market Value": f"${float(p.market_value):,.2f}",
-                "Unrealized PnL": f"${float(p.unrealized_pl):,.2f}"
-            })
+    exposure = float(
+        latest["total_exposure"]
+    )
 
-        positions_df = pd.DataFrame(pos_data)
+    open_positions = int(
+        latest["open_positions"]
+    )
 
-        st.dataframe(
-            positions_df,
-            use_container_width=True
+    peak_equity = equity_history[
+        "equity"
+    ].max()
+
+    current_equity = equity_history[
+        "equity"
+    ].iloc[-1]
+
+    drawdown = (
+        (
+            peak_equity
+            - current_equity
+        )
+        / peak_equity
+    ) * 100
+
+    a1, a2, a3 = st.columns(3)
+
+    with a1:
+
+        st.metric(
+            "Open Positions",
+            open_positions
         )
 
-    else:
-        st.info("No open positions.")
+    with a2:
+
+        st.metric(
+            "Total Exposure",
+            f"${exposure:,.2f}"
+        )
+
+    with a3:
+
+        st.metric(
+            "Drawdown",
+            f"{drawdown:.2f}%"
+        )
 
 except Exception as e:
-    st.error(str(e))
+
+    st.warning(
+        "Analytics unavailable"
+    )
+
+    st.write(e)
 
 # =========================================
-# RECENT ORDERS
+# POSITIONS SNAPSHOT
 # =========================================
 
-st.subheader("📄 Recent Orders")
+st.subheader(
+    "📦 Positions Snapshot"
+)
 
 try:
-    orders = client.get_orders()
 
-    order_data = []
+    positions_df = pd.read_csv(
+        "positions_snapshot.csv"
+    )
 
-    for o in orders[:10]:
+    st.dataframe(
+        positions_df,
+        use_container_width=True
+    )
 
-        order_data.append({
-            "Symbol": o.symbol,
-            "Side": o.side,
-            "Qty": o.qty,
-            "Status": o.status
-        })
+except:
 
-    orders_df = pd.DataFrame(order_data)
+    st.info(
+        "No positions snapshot yet."
+    )
+
+# =========================================
+# ORDERS SNAPSHOT
+# =========================================
+
+st.subheader(
+    "📄 Orders Snapshot"
+)
+
+try:
+
+    orders_df = pd.read_csv(
+        "orders_snapshot.csv"
+    )
 
     st.dataframe(
         orders_df,
         use_container_width=True
     )
 
-except Exception as e:
-    st.error(str(e))
+except:
+
+    st.info(
+        "No orders snapshot yet."
+    )
 
 # =========================================
 # FOOTER
 # =========================================
 
-st.success("Dashboard Running Successfully")
+st.success(
+    "Dashboard Running Successfully"
+)
