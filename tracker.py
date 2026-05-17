@@ -103,7 +103,50 @@ positions_df.to_csv(
 # =========================================
 
 orders = client.get_orders()
+# =========================================
+# REALIZED TRADE HISTORY
+# =========================================
 
+trade_rows = []
+
+for o in orders:
+
+    try:
+
+        if str(o.status) == "OrderStatus.FILLED":
+
+            trade_rows.append({
+                "timestamp": timestamp,
+                "symbol": o.symbol,
+                "side": str(o.side),
+                "qty": o.qty,
+                "status": str(o.status)
+            })
+
+    except:
+        pass
+
+trade_df = pd.DataFrame(
+    trade_rows
+)
+
+if os.path.exists(
+    "trade_history.csv"
+):
+
+    old_trade_df = pd.read_csv(
+        "trade_history.csv"
+    )
+
+    trade_df = pd.concat(
+        [old_trade_df, trade_df],
+        ignore_index=True
+    )
+
+trade_df.to_csv(
+    "trade_history.csv",
+    index=False
+)
 order_rows = []
 
 for o in orders[:50]:
