@@ -1,1 +1,2 @@
 timestamp,symbol,side,qty,status
+2026-05-21 23:18:00,AMD,OrderSide.BUY,4,OrderStatus.ACCEPTED
