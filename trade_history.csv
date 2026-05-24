@@ -44,3 +44,5 @@ timestamp,symbol,side,qty,status
 2026-05-24 08:45:38,AMD,OrderSide.BUY,4,OrderStatus.ACCEPTED
 2026-05-24 10:45:58,IWM,OrderSide.BUY,7,OrderStatus.ACCEPTED
 2026-05-24 10:45:58,AMD,OrderSide.BUY,4,OrderStatus.ACCEPTED
+2026-05-24 12:04:55,IWM,OrderSide.BUY,7,OrderStatus.ACCEPTED
+2026-05-24 12:04:55,AMD,OrderSide.BUY,4,OrderStatus.ACCEPTED
