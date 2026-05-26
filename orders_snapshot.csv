@@ -1,2 +1,1 @@
 timestamp,symbol,side,qty,status
-2026-05-26 19:48:58,IWM,OrderSide.SELL,7,OrderStatus.NEW
