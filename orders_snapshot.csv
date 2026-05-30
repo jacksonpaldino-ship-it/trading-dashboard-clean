@@ -1,2 +1,2 @@
 timestamp,symbol,side,qty,status
-2026-05-30 15:48:53,META,OrderSide.BUY,1,OrderStatus.ACCEPTED
+2026-05-30 17:17:01,META,OrderSide.BUY,1,OrderStatus.ACCEPTED
