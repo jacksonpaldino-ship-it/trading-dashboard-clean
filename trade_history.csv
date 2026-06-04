@@ -130,3 +130,4 @@ timestamp,symbol,side,qty,status
 2026-05-31 23:48:34,META,OrderSide.BUY,1,OrderStatus.ACCEPTED
 2026-06-01 04:58:13,META,OrderSide.BUY,1,OrderStatus.ACCEPTED
 2026-06-01 10:29:34,META,OrderSide.BUY,1,OrderStatus.ACCEPTED
+2026-06-04 22:54:05,XLV,OrderSide.BUY,13,OrderStatus.ACCEPTED
