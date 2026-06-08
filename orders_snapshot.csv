@@ -1,1 +1,3 @@
 timestamp,symbol,side,qty,status
+2026-06-08 06:24:59,META,OrderSide.SELL,1,OrderStatus.ACCEPTED
+2026-06-08 06:24:59,XLV,OrderSide.SELL,13,OrderStatus.ACCEPTED

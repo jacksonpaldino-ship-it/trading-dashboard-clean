@@ -138,3 +138,5 @@ timestamp,symbol,side,qty,status
 2026-06-05 15:31:38,XLV,OrderSide.SELL,13,OrderStatus.NEW
 2026-06-05 17:33:22,XLV,OrderSide.SELL,13,OrderStatus.NEW
 2026-06-05 19:24:35,XLV,OrderSide.SELL,13,OrderStatus.NEW
+2026-06-08 06:24:59,META,OrderSide.SELL,1,OrderStatus.ACCEPTED
+2026-06-08 06:24:59,XLV,OrderSide.SELL,13,OrderStatus.ACCEPTED
