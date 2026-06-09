@@ -148,3 +148,5 @@ timestamp,symbol,side,qty,status
 2026-06-09 16:50:02,OCC,OrderSide.SELL,2,OrderStatus.NEW
 2026-06-09 19:21:41,SPY,OrderSide.SELL,2,OrderStatus.NEW
 2026-06-09 19:21:41,RKLB,OrderSide.SELL,4,OrderStatus.NEW
+2026-06-09 21:20:28,SPY,OrderSide.SELL,2,OrderStatus.NEW
+2026-06-09 21:20:28,RKLB,OrderSide.SELL,4,OrderStatus.NEW
