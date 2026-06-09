@@ -1,4 +1,2 @@
 timestamp,symbol,side,qty,status
-2026-06-09 14:07:11,OCC,OrderSide.SELL,2,OrderStatus.NEW
-2026-06-09 14:07:11,ABAT,OrderSide.SELL,40,OrderStatus.NEW
-2026-06-09 14:07:11,RKLB,OrderSide.SELL,8,OrderStatus.NEW
+2026-06-09 16:50:02,OCC,OrderSide.SELL,2,OrderStatus.NEW
