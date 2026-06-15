@@ -1,2 +1,1 @@
 timestamp,symbol,side,qty,status
-2026-06-15 11:35:58,RKLB,OrderSide.SELL,4,OrderStatus.NEW
