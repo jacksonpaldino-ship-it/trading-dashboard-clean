@@ -1,2 +1,1 @@
 timestamp,symbol,side,qty,status
-2026-07-10 18:46:52,AAPL,OrderSide.SELL,8,OrderStatus.NEW
