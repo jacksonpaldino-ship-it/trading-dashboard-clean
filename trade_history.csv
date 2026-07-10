@@ -160,3 +160,4 @@ timestamp,symbol,side,qty,status
 2026-06-15 00:18:56,RKLB,OrderSide.SELL,4,OrderStatus.ACCEPTED
 2026-06-15 05:40:25,RKLB,OrderSide.SELL,4,OrderStatus.ACCEPTED
 2026-06-15 11:35:58,RKLB,OrderSide.SELL,4,OrderStatus.NEW
+2026-07-10 17:10:12,AAPL,OrderSide.SELL,8,OrderStatus.NEW
