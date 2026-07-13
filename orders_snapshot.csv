@@ -1,1 +1,2 @@
 timestamp,symbol,side,qty,status
+2026-07-13 18:03:08,IYW,OrderSide.SELL,9,OrderStatus.NEW
