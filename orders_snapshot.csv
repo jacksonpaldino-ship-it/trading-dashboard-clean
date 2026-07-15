@@ -1,2 +1,1 @@
 timestamp,symbol,side,qty,status
-2026-07-15 19:54:10,XLF,OrderSide.SELL,39,OrderStatus.NEW
