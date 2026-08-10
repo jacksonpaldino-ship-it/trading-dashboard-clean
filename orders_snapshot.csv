@@ -1,1 +1,2 @@
 timestamp,symbol,side,qty,status
+2026-08-10 15:40:29,VGT,OrderSide.SELL,9,OrderStatus.NEW
