@@ -194,3 +194,5 @@ timestamp,symbol,side,qty,status
 2026-08-16 22:51:09,VGT,OrderSide.SELL,9,OrderStatus.ACCEPTED
 2026-08-16 23:25:52,IYW,OrderSide.SELL,7,OrderStatus.ACCEPTED
 2026-08-16 23:25:52,VGT,OrderSide.SELL,9,OrderStatus.ACCEPTED
+2026-08-16 23:47:45,IYW,OrderSide.SELL,7,OrderStatus.ACCEPTED
+2026-08-16 23:47:45,VGT,OrderSide.SELL,9,OrderStatus.ACCEPTED
